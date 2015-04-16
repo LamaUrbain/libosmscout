@@ -16,6 +16,11 @@ programs = libosmscout \
            StyleEditor \
            Tests
 
+lol = libosmscout \
+           libosmscout-import \
+           libosmscout-map \
+           libosmscout-map-cairo
+
 all:
 	@for x in $(programs); do \
 	  if [ -d $$x ]; then \
@@ -28,6 +33,14 @@ full:
 	  if [ -d $$x ]; then \
 	    echo Building $$x...; \
 	    (cd $$x && ./autogen.sh && ./configure && $(MAKE)); \
+	  fi \
+	done
+
+full-install:
+	@for x in $(lol); do \
+	  if [ -d $$x ]; then \
+	    echo Building $$x...; \
+	    (cd $$x && ./autogen.sh && ./configure && $(MAKE) && sudo $(MAKE) install); \
 	  fi \
 	done
 
